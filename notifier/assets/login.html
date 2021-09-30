@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Notifier - please log in</title>
+    <style>
+      body {
+        background: black;
+        color: #ddd;
+        font-family: monospace;
+        margin-top: 90px;
+      }
+      main {
+        max-width: 400px;
+        margin: 0 auto;
+      }
+      .message.success {
+        color: lightgreen;
+      }
+      .message .icon {
+        margin-top: 8px;
+        width: 16px;
+        height: 16px;
+        display: inline-block;
+
+        color: black;
+        text-align: center;
+      }
+      .message.success .icon {
+        background: lightgreen;
+      }
+      .message.error .icon {
+        background: crimson;
+      }
+      .message.error {
+        color: crimson;
+      }
+      .field {
+        margin-top: 16px;
+      }
+      .field label {
+        font-weight: bold;
+      }
+      .field input {
+        margin-top: 4px;
+        width: 100%;
+        box-sizing: border-box;
+        background: black;
+        color: #ddd;
+        border: 2px solid #666;
+        padding: 4px;
+        outline: none;
+      }
+      .field input:focus {
+        border: 2px solid green;
+      }
+      button {
+        margin-top: 16px;
+        width: 100%;
+        display: block;
+        background: lightgreen;
+        color: black;
+        border: 2px solid lightgreen;
+        cursor: pointer;
+        font-family: monospace;
+        padding: 4px;
+      }
+      button:hover {
+        background: black;
+        color: lightgreen;
+      }
+      button:active {
+        transform: scale(0.95);
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>Notifier</h1>
+      {{ if .Message }}
+      <div class="message error">
+        <div class="icon">!</div>
+       {{ .Message }}
+      </div>
+      {{ else }}
+      <div class="message success">
+        <div class="icon">i</div>
+        Please log in to continue.
+      </div>
+      {{ end }}
+
+      <form action="/login" method="POST">
+        <div class="field">
+          <label for="username">Username</label>
+          <input
+            type="text"
+            name="username"
+            id="username"
+            placeholder="Username"
+          />
+        </div>
+        <div class="field">
+          <label for="password">Password</label>
+          <input
+            type="password"
+            name="password"
+            id="password"
+            placeholder="Password"
+          />
+        </div>
+        <button type="submit">Log in</button>
+      </form>
+    </main>
+  </body>
+</html>

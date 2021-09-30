@@ -1,0 +1,108 @@
+definitions:
+  notifier.Answer:
+    properties:
+      answerDuration:
+        type: integer
+      timedOut:
+        type: boolean
+      value: {}
+    type: object
+  notifier.ErrorResponse:
+    properties:
+      error:
+        type: string
+    type: object
+  notifier.PostNotifyBody:
+    properties:
+      body:
+        type: string
+      title:
+        type: string
+    type: object
+  notifier.PostNotifyResponse:
+    properties:
+      deliveriesCucceeded:
+        type: integer
+      deliveriesTotal:
+        type: integer
+      errors:
+        additionalProperties:
+          type: string
+        type: object
+    type: object
+  notifier.PostQuestionBody:
+    properties:
+      kind:
+        type: string
+      text:
+        type: string
+      timeout:
+        type: string
+    type: object
+  notifier.PostQuestionResponse:
+    properties:
+      answer:
+        $ref: '#/definitions/notifier.Answer'
+      errors:
+        additionalProperties:
+          type: string
+        type: object
+    type: object
+info:
+  contact: {}
+paths:
+  /notify:
+    post:
+      consumes:
+      - application/json
+      description: Delivers a notification to all the sinks
+      operationId: post-notification
+      parameters:
+      - description: Notification to deliver
+        in: body
+        name: notification
+        required: true
+        schema:
+          $ref: '#/definitions/notifier.PostNotifyBody'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/notifier.PostNotifyResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/notifier.ErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Send a notification
+  /question:
+    post:
+      consumes:
+      - application/json
+      description: 'Currently supported question types: yesno'
+      operationId: post-question
+      parameters:
+      - description: Question to ask
+        in: body
+        name: notification
+        required: true
+        schema:
+          $ref: '#/definitions/notifier.PostQuestionBody'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/notifier.PostQuestionResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/notifier.ErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Asks a question to the user
+swagger: "2.0"
