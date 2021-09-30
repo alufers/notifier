@@ -2,7 +2,7 @@
 
 ![A gif showing the project in action](./readme/demo.gif)
 
-A simple microservice which accepts incoming notifications, and questions and redirects them to notification sinks such as Telegram, etc.
+A simple microservice which accepts incoming notifications, and questions and redirects them to notification sinks such as Telegram, Email etc.
 
 ## Building
 
@@ -25,6 +25,14 @@ sinks:
   - type: telegram
     bot_token: <bot token here>
     chat_id: <chat id to post messages to>
+  - type: email
+    from: "notifications@example.com"
+    to:
+      - "me@example.com"
+    smtp_address: "mail.example.com:587"
+    smtp_username: "notifications@example.com"
+    smtp_password: "cocker12"
+    starttls: true
 users:
   - username: user # used to login via web and view API docs at :8080
     password: pass
